@@ -1,34 +1,30 @@
+import Environment from "./Connection/environment.ts";
+import { evaluate } from "./Connection/interpreter.ts";
+import { MAKE_BOOL, MAKE_NULL } from "./Connection/values.ts";
 import Parser from "./core/parser.ts";
-import Environment from "./runtime/environment.ts";
-import { evaluate } from "./runtime/interpreter.ts";
-import { MAKE_BOOL, MAKE_NULL, MAKE_NUMBER} from "./runtime/values.ts";
 
-repl();
+STShell();
 
-function repl() {
-    const parser = new Parser();
-    const environment = new Environment();
-    
-    environment.declareVarbiale("x", MAKE_NUMBER(100));
-    environment.declareVarbiale("true", MAKE_BOOL(true));
-    environment.declareVarbiale("false", MAKE_BOOL(false));
-    environment.declareVarbiale("null", MAKE_NULL());
+function STShell() {
+  const parser = new Parser();
+  const env = new Environment();
 
-    console.log("\nRepl v0.1")
+  env.declareVar("true", MAKE_BOOL(true), true);
+  env.declareVar("false", MAKE_BOOL(false), true);
+  env.declareVar("null", MAKE_NULL(), true);
 
-    while(true) {
-        const input = prompt("> ");
+  console.log("\n** STShell v0.1 ** \n");
 
-        if(!input || input.includes("exit")) {
-            Deno.exit(1);
-        }
+  while (true) {
+    const input = prompt("<STShell/> ");
 
-        const program = parser.produceAST(input);
+    if (!input || input.includes("exit")) 
+      Deno.exit(1);
 
-        console.log(program);
+    const program = parser.produceAST(input);
 
-        const result = evaluate(program, environment);
-        
-        console.log("Result: ", result);
-    }
+    const result = evaluate(program, env);
+
+    console.log(result);
+  }
 }
