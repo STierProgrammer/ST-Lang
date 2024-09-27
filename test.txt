@@ -1,5 +1,7 @@
 const foo = 41;
 
+foo = 1;
+
 const object = {
     x: 50,
     y: 12,
