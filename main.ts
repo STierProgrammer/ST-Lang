@@ -1,17 +1,23 @@
-import Environment from "./Connection/environment.ts";
+import Environment, { createGlobalEnv } from "./Connection/environment.ts";
 import { evaluate } from "./Connection/interpreter.ts";
-import { MAKE_BOOL, MAKE_NULL } from "./Connection/values.ts";
 import Parser from "./core/parser.ts";
 
-STShell();
+run("./test.txt");
+
+async function run(filename: string) {
+  const parser = new Parser();
+  const env = createGlobalEnv();
+
+  const input = await Deno.readTextFile(filename);
+  const program = parser.produceAST(input);
+  const result = evaluate(program, env);
+
+  console.log(result);
+}
 
 function STShell() {
   const parser = new Parser();
-  const env = new Environment();
-
-  env.declareVar("true", MAKE_BOOL(true), true);
-  env.declareVar("false", MAKE_BOOL(false), true);
-  env.declareVar("null", MAKE_NULL(), true);
+  const env = createGlobalEnv();
 
   console.log("\n** STShell v0.1 ** \n");
 

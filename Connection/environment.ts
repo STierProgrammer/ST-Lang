@@ -1,5 +1,14 @@
-import { RuntimeVal } from "./values.ts";
+import { MAKE_BOOL, MAKE_NULL, RuntimeVal } from "./values.ts";
 
+export function createGlobalEnv () {
+  const env = new Environment();
+
+  env.declareVar("true", MAKE_BOOL(true), true);
+  env.declareVar("false", MAKE_BOOL(false), true);
+  env.declareVar("null", MAKE_NULL(), true);
+
+  return env;
+}
 export default class Environment {
   private parent?: Environment;
   private variables: Map<string, RuntimeVal>;

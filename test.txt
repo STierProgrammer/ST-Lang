@@ -1,0 +1,11 @@
+const foo = 41;
+
+const object = {
+    x: 50,
+    y: 12,
+    z: 90,
+    foo,
+    something: {
+        boolean: true,
+    },
+};
