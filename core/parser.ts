@@ -135,10 +135,10 @@ export default class Parser {
     return { kind: "ObjectLiteral", properties } as ObjectLiteral;
   }
 
-  parseAssignmentExpression(): Expr {
+  private parseAssignmentExpression(): Expr {
       const left = this.parseObjectExpression();
 
-      if (this.at().type == TokenType.Equals) {
+      if (this.at().type == TokenType.Equals ) {
         this.eat();
 
         const value = this.parseAssignmentExpression();
