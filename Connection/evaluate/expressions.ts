@@ -28,9 +28,9 @@ export function evaluateBinaryExpression(binop: BinaryExpression, env: Environme
   const lhs = evaluate(binop.left, env);
   const rhs = evaluate(binop.right, env);
 
-  if (lhs.type == "number" && rhs.type == "number") 
+  if (lhs.type == "number" && rhs.type == "number")
     return evaluateNumericBinaryExpression(lhs as NumberVal, rhs as NumberVal, binop.operator);
-  
+    
   return MAKE_NULL();
 }
 

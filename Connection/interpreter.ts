@@ -16,7 +16,7 @@ export function evaluate(astNode: Statement, env: Environment): RuntimeVal {
     case "ObjectLiteral":
       return evaluateObjectExpression(astNode as ObjectLiteral, env);
     
-      case "AssignmentExpression":
+    case "AssignmentExpression":
       return evaluateAssignment(astNode as AssignmentExpression, env)
     
     case "BinaryExpression":
