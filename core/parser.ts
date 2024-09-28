@@ -58,14 +58,22 @@ export default class Parser {
   }
 
   private parseStatement(): Statement {
-    switch (this.at().type) {     
+    switch (this.at().type) {
       case TokenType.Const:
+      case TokenType.Let:
         return this.parseVariabelDeclaration();
-
-      default:
-        return this.parseExpression();
+    
+      default: {
+        const expression = this.parseExpression();
+        
+        if (this.at().type === TokenType.Semicolon) 
+          this.eat(); 
+  
+        return expression;
+      }
     }
   }
+  
 
   private parseVariabelDeclaration(): Statement {
     const isConstant = this.eat().type == TokenType.Const;
@@ -138,7 +146,7 @@ export default class Parser {
   private parseAssignmentExpression(): Expr {
       const left = this.parseObjectExpression();
 
-      if (this.at().type == TokenType.Equals ) {
+      if (this.at().type == TokenType.Equals) {
         this.eat();
 
         const value = this.parseAssignmentExpression();

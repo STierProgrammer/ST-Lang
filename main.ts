@@ -1,4 +1,4 @@
-import Environment, { createGlobalEnv } from "./Connection/environment.ts";
+import { createGlobalEnv } from "./Connection/environment.ts";
 import { evaluate } from "./Connection/interpreter.ts";
 import Parser from "./core/parser.ts";
 

@@ -1,12 +1,14 @@
 const foo = 41;
+let var = 1;
 
-foo = 1;
+var = 9;
 
 const object = {
     x: 50,
     y: 12,
     z: 90,
     foo,
+    var,
     something: {
         boolean: true,
     },
