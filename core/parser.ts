@@ -36,6 +36,7 @@ export default class Parser {
 
     if (!previous || previous.type != type) {
       console.error("Parser Error:\n", err, previous, " - Expecting: ", type);
+      
       Deno.exit(1);
     }
 
@@ -82,10 +83,9 @@ export default class Parser {
     if (this.at().type == TokenType.Semicolon) {
       this.eat();
       
-      if (isConstant) {
+      if (isConstant) 
         throw "Must assigne value to constant expression. No value provided.";
-      }
-
+      
       return { kind: "VarDeclaration", identifier, constant: false } as VarDeclaration;
     }
 
@@ -121,7 +121,9 @@ export default class Parser {
         properties.push({ key, kind: "Property" } as Property);
 
         continue;
-      } else if (this.at().type == TokenType.CloseBrace) {
+      } 
+      
+      else if (this.at().type == TokenType.CloseBrace) {
         properties.push({ key, kind: "Property" } as Property);
 
         continue;
@@ -133,9 +135,8 @@ export default class Parser {
 
       properties.push({ kind: "Property", value, key })
 
-      if (this.at().type != TokenType.CloseBrace) {
+      if (this.at().type != TokenType.CloseBrace) 
         this.expect(TokenType.Comma, "Expected comma or Closing Bracket following Property");
-      }
     } 
 
     this.expect(TokenType.CloseBrace, "Object literal missing closing brace.");
@@ -203,7 +204,6 @@ export default class Parser {
 
         return value;
       }
-
 
       default:
         console.error("Unexpected token found during parsing!", this.at());
