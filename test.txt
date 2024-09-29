@@ -13,3 +13,6 @@ const object = {
         boolean: true,
     },
 };
+
+let f = object.complex.bar;
+foo = obj.foo() + 5
