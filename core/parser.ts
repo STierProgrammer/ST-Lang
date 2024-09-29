@@ -43,21 +43,6 @@ export default class Parser {
     return previous;
   }
 
-  public produceAST(sourceCode: string): Program {
-    this.tokens = tokenize(sourceCode);
-    
-    const program: Program = {
-      kind: "Program",
-      body: [],
-    };
-
-    while (this.not_EOF()) {
-      program.body.push(this.parseStatement());
-    }
-
-    return program; 
-  }
-
   private parseStatement(): Statement {
     switch (this.at().type) {
       case TokenType.Const:
@@ -75,7 +60,6 @@ export default class Parser {
     }
   }
   
-
   private parseVariabelDeclaration(): Statement {
     const isConstant = this.eat().type == TokenType.Const;
     const identifier = this.expect(TokenType.Identifier, "Expected identifier name following let | const keywords.").value;
@@ -97,7 +81,6 @@ export default class Parser {
 
     return declaration;
   }
-
 
   private parseExpression(): Expr {
       return this.parseAssignmentExpression();
@@ -209,5 +192,20 @@ export default class Parser {
         console.error("Unexpected token found during parsing!", this.at());
         Deno.exit(1);
     }
+  }
+
+  public produceAST(sourceCode: string): Program {
+    this.tokens = tokenize(sourceCode);
+    
+    const program: Program = {
+      kind: "Program",
+      body: [],
+    };
+
+    while (this.not_EOF()) {
+      program.body.push(this.parseStatement());
+    }
+
+    return program; 
   }
 }
