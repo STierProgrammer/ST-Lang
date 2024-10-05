@@ -1,18 +1,8 @@
 const foo = 41;
 let var = 1;
 
-var = 9;
+print(foo, 45)
 
-const object = {
-    x: 50,
-    y: 12,
-    z: 90,
-    foo,
-    var,
-    something: {
-        boolean: true,
-    },
-};
+const date = time();
 
-let f = object.complex.bar;
-foo = obj.foo() + 5
+print(date)

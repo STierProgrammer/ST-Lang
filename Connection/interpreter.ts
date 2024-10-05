@@ -1,6 +1,6 @@
-import { AssignmentExpression, BinaryExpression, Identifier, NumericLiteral, ObjectLiteral, Program, Statement, VarDeclaration } from "../core/ast.ts";
+import { AssignmentExpression, BinaryExpression, CallExpression, Identifier, NumericLiteral, ObjectLiteral, Program, Statement, VarDeclaration } from "../core/ast.ts";
 import Environment from "./environment.ts";
-import { evaluateAssignment, evaluateBinaryExpression, evaluateIdentifier, evaluateObjectExpression } from "./evaluate/expressions.ts";
+import { evaluateAssignment, evaluateBinaryExpression, evaluateCallExpression, evaluateIdentifier, evaluateObjectExpression } from "./evaluate/expressions.ts";
 import { evaluateProgram, evaluateVarDeclaration } from "./evaluate/statement.ts";
 import { NumberVal, RuntimeVal } from "./values.ts";
 
@@ -28,6 +28,8 @@ export function evaluate(astNode: Statement, env: Environment): RuntimeVal {
     case "VarDeclaration":
       return evaluateVarDeclaration(astNode as VarDeclaration, env);
 
+    case "CallExpression":
+      return evaluateCallExpression(astNode as CallExpression, env);
     default:
       console.error("This AST Node has not yet been setup for interpretation.", astNode);
 

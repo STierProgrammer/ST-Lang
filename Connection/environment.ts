@@ -1,4 +1,4 @@
-import { MAKE_BOOL, MAKE_NULL, RuntimeVal } from "./values.ts";
+import { MAKE_BOOL, MAKE_NATIVE_FUNCTION, MAKE_NULL, MAKE_NUMBER, RuntimeVal } from "./values.ts";
 
 export function createGlobalEnv () {
   const env = new Environment();
@@ -6,6 +6,18 @@ export function createGlobalEnv () {
   env.declareVar("true", MAKE_BOOL(true), true);
   env.declareVar("false", MAKE_BOOL(false), true);
   env.declareVar("null", MAKE_NULL(), true);
+
+  env.declareVar("print", MAKE_NATIVE_FUNCTION((args, scope) => {
+    console.log(...args);
+    
+    return MAKE_NULL();
+  }), true)
+
+  function timeFunction(args: RuntimeVal[], env: Environment) {
+    return MAKE_NUMBER(Date.now());
+  }
+
+  env.declareVar("time", MAKE_NATIVE_FUNCTION(timeFunction), true);
 
   return env;
 }

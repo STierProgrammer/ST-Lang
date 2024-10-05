@@ -1,7 +1,7 @@
 import Environment from "../environment.ts";
-import { AssignmentExpression, BinaryExpression, Identifier, ObjectLiteral } from "../../core/ast.ts";
+import { AssignmentExpression, BinaryExpression, CallExpression, Identifier, ObjectLiteral } from "../../core/ast.ts";
 import { evaluate } from "../interpreter.ts";
-import { MAKE_NULL, NumberVal, ObjectVal, RuntimeVal } from "../values.ts";
+import { MAKE_NULL, NativeFunctionValue, NumberVal, ObjectVal, RuntimeVal } from "../values.ts";
 
 function evaluateNumericBinaryExpression(lhs: NumberVal, rhs: NumberVal, operator: string,): NumberVal {
   let result: number;
@@ -59,4 +59,17 @@ export function evaluateObjectExpression (obj: ObjectLiteral, env: Environment):
   }
 
   return object;
+}
+
+export function evaluateCallExpression (expression: CallExpression, env: Environment): RuntimeVal {
+  const args = expression.args.map((arg) => evaluate(arg, env));
+  const func = evaluate(expression.caller, env);
+
+  if(func.type !== "nativeFunction") {
+    throw "Cannot call value that is not a function: " + JSON.stringify(func);
+  }
+
+  const result = (func as NativeFunctionValue).call(args, env);
+
+  return result;
 }
