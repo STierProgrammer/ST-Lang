@@ -1,5 +1,5 @@
-import { createGlobalEnv } from "./Connection/environment.ts";
-import { evaluate } from "./Connection/interpreter.ts";
+import { createGlobalEnv } from "./connection/environment.ts";
+import { evaluate } from "./connection/interpreter.ts";
 import Parser from "./core/parser.ts";
 
 run("./test.txt");
